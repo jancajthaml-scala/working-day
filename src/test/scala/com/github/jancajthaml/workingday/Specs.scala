@@ -21,21 +21,21 @@ class WorkingDaySpecs extends FlatSpec with Matchers {
     val holiday_3 = LocalDate.of(8016, 1, 1)
     val working   = LocalDate.of(8016, 4, 7)
 
-    working_days(holiday_1) should === (false)
-    working_days(holiday_2) should === (false)
-    working_days(holiday_3) should === (false)
-    working_days(working) should === (true)
+    working_days.is(holiday_1) should === (false)
+    working_days.is(holiday_2) should === (false)
+    working_days.is(holiday_3) should === (false)
+    working_days.is(working) should === (true)
   }
 
   it should "allow valid working day" in {
     val monday = LocalDate.of(2017, 4, 24)
 
-    working_days(monday) should === (true)
+    working_days.is(monday) should === (true)
   }
 
   it should "reject sunday in future" in {
     val sunday = LocalDate.of(5000, 5, 18)
-    working_days(sunday) should === (false)
+    working_days.is(sunday) should === (false)
   }
 
   it should "reject range around ressurection day / easter" in {
@@ -45,10 +45,14 @@ class WorkingDaySpecs extends FlatSpec with Matchers {
     val after_range  = LocalDate.of(2020, 4, 7)
     val after_out    = LocalDate.of(2020, 4, 13)
 
-    working_days(before_out) should === (true)
-    working_days(before_range) should === (false)
-    working_days(after_range) should === (false)
-    working_days(after_out) should === (true)
+    working_days.is(before_out) should === (true)
+    working_days.is(before_range) should === (false)
+    working_days.is(after_range) should === (false)
+    working_days.is(after_out) should === (true)
   }
 
+  "Calendar" should "find next working day" in {
+    val holiday_1 = LocalDate.of(2017, 4, 7)
+    working_days.next(holiday_1) should === (LocalDate.of(2017, 4, 10))
+  }
 }
