@@ -9,12 +9,10 @@ private[workingday] object helper {
 
   val week = """([Mm]ond?a?y?|[Tt]ues?d?a?y?|[Ww]edn?e?s?d?a?y?|[Tt]hursd?a?y?|[Ff]rid?a?y?|[Ss]atu?r?d?a?y?|[Ss]und?a?y?)""".r
   val month = """([1-9]|[12]\d|3[01])\/(1[0-2]|[1-9])""".r
-  val year = """([1-9]|[12]\d|3[01])\/(1[0-2]|[1-9])\/(\d{4})""".r
-  val res = """Ressurection([-+]\d+)""".r
+  val year = """([1-9]|[12]\d|3[01])\/(1[0-2]|[1-9])\/(\d{4}|\d{2}$)""".r
+  val res = """Ressurection([-+]\d{1,31})""".r
 
-  type DaysOff = (Stash[DayOfWeek], Stash[MonthDay], Stash[LocalDate], Stash[Int])
-
-  def normalize(days: Iterable[String]): DaysOff = {
+  def normalize(days: Iterable[String]) = {
     val dayOfWeek = Stash.empty[DayOfWeek]
     val monthDay = Stash.empty[MonthDay]
     val localDate = Stash.empty[LocalDate]
@@ -31,21 +29,22 @@ private[workingday] object helper {
   }
 }
 
-case class WorkingDaysCalendar(check: (LocalDate => Boolean), find: (LocalDate => LocalDate)) {
-  def is(date: LocalDate) = check(date)
-  def next(date: LocalDate) = find(date)
+case class WorkingDaysCalendar(_is: (LocalDate => Boolean), _next: (LocalDate => LocalDate), _shift: ((LocalDate, Int) => LocalDate)) {
+  def is = _is
+  def next = _next
+  def shift = _shift
 }
 
 object WorkingDays extends (Iterable[String] => WorkingDaysCalendar) {
 
   def apply(daysOff: Iterable[String]): WorkingDaysCalendar = {
-    val (week, month, day, shift) = helper.normalize(daysOff)
+    val (week, month, day, christ) = helper.normalize(daysOff)
 
     val check = (date: LocalDate) => {
       !day.contains(date) &&
       !month.contains(MonthDay.from(date)) &&
       !week.contains(DayOfWeek.from(date)) &&
-      !shift.contains(DAYS.between({
+      !christ.contains(DAYS.between({
         // https://en.wikipedia.org/wiki/Computus
         val year = date.getYear
         val a = year % 19
@@ -60,13 +59,12 @@ object WorkingDays extends (Iterable[String] => WorkingDaysCalendar) {
         val k = c % 4
         val l = (32 + 2 * e + 2 * i - h - k) % 7
         val m = (a + 11 * h + 22 * l) / 451
-        val n = (h + l - 7 * m + 114) / 31
-        val p = (h + l - 7 * m + 114) % 31
-        LocalDate.of(year, n, p + 1)
+        val n = h + l - 7 * m + 114
+        LocalDate.of(year, n / 31, (n % 31) + 1)
       }, date).toInt)
     }
 
-    val nearest = (pivot: LocalDate) => {
+    val next = (pivot: LocalDate) => {
       var found = check(pivot)
       var copy = pivot
       while (!found) {
@@ -76,6 +74,16 @@ object WorkingDays extends (Iterable[String] => WorkingDaysCalendar) {
       copy
     }
 
-    WorkingDaysCalendar(check, nearest)
+    val shift = (pivot: LocalDate, i: Int) => {
+      var copy = pivot
+      if (i < 0) {
+        i until 0 foreach { _ => copy = next(copy.minusDays(1)) }
+      } else if (i > 0) {
+        0 until i foreach { _ => copy = next(copy.plusDays(1)) }
+      }
+      copy
+    }
+
+    WorkingDaysCalendar(check, next, shift)
   }
 }

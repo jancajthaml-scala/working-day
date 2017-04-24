@@ -55,4 +55,9 @@ class WorkingDaySpecs extends FlatSpec with Matchers {
     val holiday_1 = LocalDate.of(2017, 4, 7)
     working_days.next(holiday_1) should === (LocalDate.of(2017, 4, 10))
   }
+
+  it should "find tuesday of next week after 6 working days from monday" in {
+    val monday = LocalDate.of(2017, 4, 24)
+    working_days.shift(monday, 6) should === (LocalDate.of(2017, 5, 2))
+  }
 }
