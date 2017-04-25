@@ -16,33 +16,24 @@ Provided Set of human readable days-off function will create 3 partial functions
 | Ressurection+1     | Int         | range ressurection of christ (easter) until 1 day after    |
 | Ressurection-10    | Int         | range 10 days before until ressurection of christ (easter) |
 
-### usage
+### Usage
 
 ```scala
 val calendar = WorkingDays(List("Friday", "Saturday", "Sunday"))
 val friday = LocalDate.of(2017, 4, 14)
 
-calendar.is(friday)	// friday
+// is this date working day?
+calendar.is(friday)
 > false
 
+// what is next working day?
 calendar.next(friday)
 > 2017/4/17
 
+// what is date after 5 working days from today?
 calendar.shift(friday, 5)
 > 2017/4/24
 ````
-
-**is (LocalDate => Boolean)**
-
-true if given day is a working day
-
-**next (LocalDate => LocalDate)**
-
-next working day
-
-**shift ((LocalDate, Int) => LocalDate)**
-
-next working day after x working days
 
 ### Performance
 
