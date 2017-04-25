@@ -27,15 +27,15 @@ calendar.shift(friday, 5)
 
 ### Days off dictionary
 
-| day-off definition | resolved as | note                                                       |
-| ------------------ |:-----------:|:-----------------------------------------------------------|
-| Mon                | DayOfWeek   | every Mon, Tue ... Sun case insensitive                    |
-| Monday             | DayOfWeek   | every Monday, Tuesday ... Sunday case insensitive          |
-| dd/mm/yyyy         | LocalDate   | this given date                                            |
-| dd/mm/yy           | LocalDate   | this given date                                            |
-| dd/mm              | MonthDay    | given day given month                                      |
-| Ressurection+1     | Int         | range ressurection of christ (easter) until 1 day after    |
-| Ressurection-10    | Int         | range 10 days before until ressurection of christ (easter) |
+| defined as      | resolved as | note                                                        |
+| --------------- |:-----------:|:-----------------------------------------------------------|
+| Mon             | DayOfWeek   | every Mon, Tue ... Sun case insensitive                    |
+| Monday          | DayOfWeek   | every Monday, Tuesday ... Sunday case insensitive          |
+| dd/mm/yyyy      | LocalDate   | this given date                                            |
+| dd/mm/yy        | LocalDate   | this given date                                            |
+| dd/mm           | MonthDay    | given day given month                                      |
+| Ressurection+1  | Int         | range ressurection of christ (easter) until 1 day after    |
+| Ressurection-10 | Int         | range 10 days before until ressurection of christ (easter) |
 
 ### Performance
 
