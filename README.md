@@ -1,5 +1,7 @@
 ## Working Day Calendar
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2b57e64cb7b3446086fbfd8006ea3842)](https://www.codacy.com/app/jan-cajthaml/working-day?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jancajthaml-scala/working-day&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/jancajthaml-scala/working-day.svg?branch=master)](https://travis-ci.org/jancajthaml-scala/working-day)
+
 Tiny library for working day calculation.
 
 ### How it works

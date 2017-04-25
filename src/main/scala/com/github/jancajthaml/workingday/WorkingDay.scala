@@ -29,13 +29,9 @@ private[workingday] object helper {
   }
 }
 
-case class WorkingDaysCalendar(_is:    (LocalDate => Boolean),
-                               _next:  (LocalDate => LocalDate),
-                               _shift: ((LocalDate, Int) => LocalDate)) {
-  def is = _is
-  def next = _next
-  def shift = _shift
-}
+case class WorkingDaysCalendar(is:    (LocalDate => Boolean),
+                               next:  (LocalDate => LocalDate),
+                               shift: ((LocalDate, Int) => LocalDate))
 
 object WorkingDays extends (Iterable[String] => WorkingDaysCalendar) {
 

@@ -9,7 +9,7 @@ object RegressionResources extends Bench.OfflineReport {
   override def measurer = new Measurer.MemoryFootprint
 
   val times = Gen.range("times")(0, 100000, 20000)
-  val working_days = WorkingDays(List(
+  val calendar = WorkingDays(List(
     "Saturday",
     "Ressurection+5",
     "Ressurection-5",
@@ -26,7 +26,7 @@ object RegressionResources extends Bench.OfflineReport {
         exec.maxWarmupRuns -> 5,
         exec.benchRuns -> 5,
         exec.independentSamples -> 1
-      ) in { sz => { (0 to sz).foreach { _ => { working_days.is(day) } } } }
+      ) in { sz => { (0 to sz).foreach { _ => { calendar.is(day) } } } }
     }
   }
 }
@@ -35,7 +35,7 @@ object RegressionResources extends Bench.OfflineReport {
 object RegressionPerformance extends Bench.OfflineReport {
 
   val times = Gen.range("times")(0, 100000, 20000)
-  val working_days = WorkingDays(List(
+  val calendar = WorkingDays(List(
     "Saturday",
     "Ressurection+5",
     "Ressurection-5",
@@ -52,7 +52,7 @@ object RegressionPerformance extends Bench.OfflineReport {
         exec.independentSamples -> 1,
         exec.outliers.covMultiplier -> 1.5,
         exec.outliers.suspectPercent -> 40
-      ) in { sz => { (0 to sz).foreach { _ => { working_days.is(day) } } } }
+      ) in { sz => { (0 to sz).foreach { _ => { calendar.is(day) } } } }
     }
   }
 
