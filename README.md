@@ -27,8 +27,8 @@ calendar.shift(friday, 5)
 
 ### Days off dictionary
 
-| defined as      | resolved as | note                                                        |
-| --------------- |:-----------:|:-----------------------------------------------------------|
+| defined as      | resolved as | note                                                       |
+| :-------------- |:-----------:|:-----------------------------------------------------------|
 | Mon             | DayOfWeek   | every Mon, Tue ... Sun case insensitive                    |
 | Monday          | DayOfWeek   | every Monday, Tuesday ... Sunday case insensitive          |
 | dd/mm/yyyy      | LocalDate   | this given date                                            |
