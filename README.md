@@ -39,5 +39,5 @@ calendar.shift(friday, 5)
 
 ### Performance
 
-1x mean = 0.0 ms / 0.00 kB
-100000x mean = 0.88 ms / 0.00 kB
+- 1x mean = 0.0 ms / 0.00 kB
+- 100 000x mean = 0.88 ms / 0.00 kB
