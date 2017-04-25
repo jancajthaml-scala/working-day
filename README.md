@@ -30,7 +30,7 @@ calendar.is(friday)
 calendar.next(friday)
 > 2017/4/17
 
-// what is date after 5 working days from today?
+// what is date after 5 working days from this date?
 calendar.shift(friday, 5)
 > 2017/4/24
 ````
