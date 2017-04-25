@@ -4,7 +4,7 @@ Tiny library for working day calculation.
 
 ### How it works
 
-Provided Set of human readable days-off function will create 3 partial functions
+Provided Set of human readable days-off function will create 3 partial functions wrapped in fascade
 
 | day-off definition | resolved as | note                                                       |
 | ------------------ |:-----------:|:-----------------------------------------------------------|
